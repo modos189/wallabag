@@ -35,3 +35,8 @@ services:
     wallabag_core.doctrine.prefixed_naming_strategy:
         class: Wallabag\CoreBundle\Doctrine\Mapping\PrefixedNamingStrategy
         arguments: [%database_table_prefix%]
+
+    wallabag_core.form.type.entry_search:
+        class: Wallabag\CoreBundle\Form\Type\EntrySearchType
+        tags:
+            - { name: form.type, alias: entry_search_type }

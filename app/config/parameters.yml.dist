@@ -44,3 +44,6 @@ parameters:
     language: en_US
     from_email: no-reply@wallabag.org
     rss_limit: 50
+
+    elastic_host : 127.0.0.1
+    elastic_port : 9200

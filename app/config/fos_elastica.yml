@@ -1,0 +1,23 @@
+fos_elastica:
+    clients:
+        default: { host: %elastic_host%, port: %elastic_port% }
+    indexes:
+        wallabag:
+            client: default
+            types:
+                entry:
+                    mappings:
+                        id:
+                            type: integer
+                        # createdAt :
+                        #     type : date
+                        # updatedAt :
+                        #     type : date
+                        title : ~
+                        content : ~
+                    persistence:
+                        driver: orm
+                        model: Wallabag\CoreBundle\Entity\Entry
+                        finder: ~
+                        provider: ~
+                        listener: ~

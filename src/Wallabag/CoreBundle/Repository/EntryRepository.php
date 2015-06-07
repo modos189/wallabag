@@ -137,4 +137,53 @@ class EntryRepository extends EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function search(EntrySearch $entrySearch)
+    {
+        // we create a query to return all the articles
+        // but if the criteria title is specified, we use it
+        if ($entrySearch->getTitle() != null && $entrySearch != '') {
+            $query = new \Elastica\Query\Match();
+            $query->setFieldQuery('entry.title', $entrySearch->getTitle());
+            $query->setFieldFuzziness('entry.title', 0.7);
+            $query->setFieldMinimumShouldMatch('entry.title', '80%');
+            //
+        } else {
+            $query = new \Elastica\Query\MatchAll();
+        }
+        
+        // $baseQuery = $query;
+
+        // // then we create filters depending on the chosen criterias
+        // $boolFilter = new \Elastica\Filter\Bool();
+
+        // /*
+        //     Dates filter
+        //     We add this filter only the getIspublished filter is not at "false"
+        // */
+        // if("false" != $entrySearch->getIsPublished()
+        //    && null !== $entrySearch->getDateFrom()
+        //    && null !== $entrySearch->getDateTo())
+        // {
+        //     $boolFilter->addMust(new \Elastica\Filter\Range('publishedAt',
+        //         array(
+        //             'gte' => \Elastica\Util::convertDate($entrySearch->getDateFrom()->getTimestamp()),
+        //             'lte' => \Elastica\Util::convertDate($entrySearch->getDateTo()->getTimestamp())
+        //         )
+        //     ));
+        // }
+
+        // // Published or not filter
+        // if($entrySearch->getIsPublished() !== null){
+        //     $boolFilter->addMust(
+        //         new \Elastica\Filter\Terms('published', array($entrySearch->getIsPublished()))
+        //     );
+        // }
+
+        // $filtered = new \Elastica\Query\Filtered($baseQuery, $boolFilter);
+
+        // $query = \Elastica\Query::create($filtered);
+
+        return $this->find($query);
+    }
 }

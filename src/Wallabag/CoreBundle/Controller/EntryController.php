@@ -2,6 +2,7 @@
 
 namespace Wallabag\CoreBundle\Controller;
 
+use Wallabag\CoreBundle\Form\Type;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -214,5 +215,38 @@ class EntryController extends Controller
         if ($this->getUser()->getId() != $entry->getUser()->getId()) {
             throw $this->createAccessDeniedException('You can not use this entry.');
         }
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @Route("/search", name="search_entry")
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function listAction(Request $request)
+    {
+        $entrySearch = new \Wallabag\CoreBundle\Entity\EntrySearch();
+
+        $entrySearchForm = $this->get('form.factory')
+            ->createNamed(
+                '',
+                'entry_search_type',
+                $entrySearch,
+                array(
+                    'action' => $this->generateUrl('search_entry'),
+                    'method' => 'GET'
+                )
+            );
+        $entrySearchForm->handleRequest($request);
+        $entrySearch = $entrySearchForm->getData();
+        
+        $elasticaManager = $this->container->get('fos_elastica.manager');
+        $results = $elasticaManager->getRepository('WallabagCoreBundle:Entry')->search($entrySearch);
+
+        return $this->render('WallabagCoreBundle:Entry:list.html.twig',array(
+            'results' => $results,
+            'entrySearchForm' => $entrySearchForm->createView(),
+        ));
     }
 }

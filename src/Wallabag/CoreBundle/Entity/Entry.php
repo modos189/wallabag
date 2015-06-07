@@ -7,11 +7,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Hateoas\Configuration\Annotation as Hateoas;
 use JMS\Serializer\Annotation\XmlRoot;
+use FOS\ElasticaBundle\Configuration\Search;
 
 /**
  * Entry.
  *
  * @XmlRoot("entry")
+ * @Search(repositoryClass="Wallabag\CoreBundle\Entity\SearchRepository\EntryRepository")
  * @ORM\Entity(repositoryClass="Wallabag\CoreBundle\Repository\EntryRepository")
  * @ORM\Table
  * @ORM\HasLifecycleCallbacks()

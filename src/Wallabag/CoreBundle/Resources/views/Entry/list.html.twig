@@ -1,0 +1,27 @@
+{% extends "WallabagCoreBundle::layout.html.twig" %}
+
+{% block content %}
+
+    <h1>List of articles</h1>
+
+    <h2>Filter</h2>
+    <div class="row">
+        <div class="col-md-5">
+            {{ form(entrySearchForm) }}
+        </div>
+    </div>
+
+
+
+    <h2>Results ({{ results|length }})</h2>
+    <ul>
+        {% for entry in results %}
+            <li>
+                <h3>{{ entry.title }}</h3>
+                <p>{{ entry.content }}</p>
+            </li>
+        {% else %}
+            <li>No result for this search</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
