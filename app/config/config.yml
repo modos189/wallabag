@@ -148,3 +148,7 @@ liip_theme:
         # bundle_resource_dir:
         #     - %%dir%%/views/themes/%%current_theme%%/%%bundle_name%%/%%template%%
         #     - %%dir%%/views/%%bundle_name%%/%%override_path%%
+
+feature_checker:
+    features:
+        elasticsearch: false

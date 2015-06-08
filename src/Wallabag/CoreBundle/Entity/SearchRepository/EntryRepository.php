@@ -9,8 +9,6 @@ class EntryRepository extends Repository
 {
     public function search(EntrySearch $entrySearch)
     {
-        // we create a query to return all the articles
-        // but if the criteria title is specified, we use it
         if ($entrySearch->getTitle() != null && $entrySearch != '') {
             $query = new \Elastica\Query\Match();
             $query->setFieldQuery('entry.title', $entrySearch->getTitle());
@@ -20,7 +18,6 @@ class EntryRepository extends Repository
         } else {
             $query = new \Elastica\Query\MatchAll();
         }
-         $baseQuery = $query;
 
         // // then we create filters depending on the chosen criterias
         // $boolFilter = new \Elastica\Filter\Bool();

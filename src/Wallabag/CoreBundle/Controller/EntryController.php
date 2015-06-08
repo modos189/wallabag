@@ -2,6 +2,7 @@
 
 namespace Wallabag\CoreBundle\Controller;
 
+use LWI\FeatureCheckerBundle\Annotations\MustHaveFeature;
 use Wallabag\CoreBundle\Form\Type;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -220,6 +221,7 @@ class EntryController extends Controller
     /**
      * @param Request $request
      *
+     * @MustHaveFeature("elasticsearch")
      * @Route("/search", name="search_entry")
      *
      * @return \Symfony\Component\HttpFoundation\Response

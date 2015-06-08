@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new Wallabag\ApiBundle\WallabagApiBundle(),
             new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle(),
             new FOS\ElasticaBundle\FOSElasticaBundle(),
+            new LWI\FeatureCheckerBundle\FeatureCheckerBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
